@@ -1,0 +1,263 @@
+HTML
+
+<title>Sistema de Gamificação</title>
+🏆 Gamificação Escolar
+    <!-- Perfil do Aluno -->
+    <div class="profile-card">
+        <h2 id="student-name">Caio Vieira</h2>
+        <div class="progress-bar">
+            <div id="progress" class="progress-fill"></div>
+        </div>
+        <p>Pontos: <span id="points">0</span>/1000</p>
+    </div>
+
+    <!-- Badges -->
+    <div class="badges-section">
+        <h2>📛 Conquistas</h2>
+        <div id="badges-container" class="badges-grid">
+            <!-- Badges serão inseridas via JS -->
+        </div>
+    </div>
+
+    <!-- Ranking -->
+    <div class="ranking-section">
+        <h2>🏅 Ranking da Turma</h2>
+        <table id="ranking-table">
+            <thead>
+                <tr>
+                    <th>Posição</th>
+                    <th>Nome</th>
+                    <th>Pontos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dados serão inseridos via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="gamificacao.js"></script>
+CSS
+
+body {
+font-family: 'Arial', sans-serif;
+background-color: #f5f5f5;
+margin: 0;
+padding: 20px;
+color: #333;
+}
+
+.container {
+max-width: 800px;
+margin: 0 auto;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card {
+background-color: #ea0000;
+color: white;
+padding: 20px;
+border-radius: 8px;
+margin-bottom: 20px;
+text-align: center;
+}
+
+.progress-bar {
+background-color: #e0e0e0;
+height: 20px;
+border-radius: 10px;
+margin: 10px 0;
+}
+
+.progress-fill {
+background-color: #0e0c01;
+height: 100%;
+border-radius: 10px;
+width: 0%;
+transition: width 0.5s;
+}
+
+.badges-section, .ranking-section {
+margin-top: 30px;
+}
+
+.badges-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+gap: 15px;
+}
+
+.badge {
+background-color: #cdcd20;
+color: white;
+padding: 10px;
+border-radius: 8px;
+text-align: center;
+font-weight: bold;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+}
+
+th, td {
+padding: 12px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+
+th {
+background-color: #ea0023;
+color: white;
+}
+
+tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+JS
+
+// Dados em JSON (simulando resposta de API)
+const gamificationData = {
+student: {
+name: "Caio Vieira",
+points: 750,
+badges: ["Top 5", "Entregou Tudo", "Criativo"],
+},
+ranking: [
+{ position: 1, name: "Maria Souza", points: 1200 },
+{ position: 2, name: "João Silva", points: 1100 },
+{ position: 3, name: "Caio Vieira", points: 750 },
+{ position: 4, name: "Ana Costa", points: 600 },
+]
+};
+
+// Atualiza o perfil do aluno
+document.getElementById("student-name").textContent = gamificationData.student.name;
+document.getElementById("points").textContent = gamificationData.student.points;
+document.getElementById("progress").style.width = ${(gamificationData.student.points / 1000) * 100}%;
+
+// Renderiza badges
+const badgesContainer = document.getElementById("badges-container");
+gamificationData.student.badges.forEach(badge => {
+const badgeElement = document.createElement("div");
+badgeElement.className = "badge";
+badgeElement.textContent = badge;
+badgesContainer.appendChild(badgeElement);
+});
+
+// Renderiza ranking
+const rankingTable = document.querySelector("#ranking-table tbody");
+gamificationData.ranking.forEach(student => {
+const row = document.createElement("tr");
+row.innerHTML = <td>${student.position}</td> <td>${student.name}</td> <td>${student.points}</td>;
+rankingTable.appendChild(row);
+});
+
+JSON
+
+{
+"alunos": [
+{
+"id": 1,
+"nome": "Caio Vieira",
+"email": "caio.vieira@email.com",
+"turma": "8ºA",
+"pontos": 750,
+"nivel": "Intermediário",
+"avatar": "😎",
+"badgesIds": [1, 3],
+"atividadesIds": [1, 2]
+},
+{
+"id": 2,
+"nome": "Maria Souza",
+"email": "maria.souza@email.com",
+"turma": "8ºA",
+"pontos": 1200,
+"nivel": "Avançado",
+"avatar": "👩‍🎓",
+"badgesIds": [1, 2, 4],
+"atividadesIds": [1, 3]
+}
+],
+"professores": [
+{
+"id": 1,
+"nome": "Carlos Oliveira",
+"email": "carlos.oliveira@escola.com",
+"disciplinas": ["Matemática", "Física"]
+}
+],
+"badges": [
+{
+"id": 1,
+"nome": "Top 5 da Turma",
+"icone": "🥇",
+"descricao": "Aluno está entre os 5 melhores do ranking",
+"raridade": "Raro"
+},
+{
+"id": 2,
+"nome": "Mestre em Matemática",
+"icone": "🧮",
+"descricao": "Concluiu todas as tarefas de matemática com nota máxima",
+"raridade": "Épico"
+},
+{
+"id": 3,
+"nome": "Criativo",
+"icone": "🎨",
+"descricao": "Entregou 10 trabalhos com soluções inovadoras",
+"raridade": "Comum"
+}
+],
+"atividades": [
+{
+"id": 1,
+"titulo": "Álgebra: Equações Lineares",
+"disciplina": "Matemática",
+"tipo": "Tarefa",
+"pontos": 50,
+"dataEntrega": "2023-11-10",
+"professorId": 1
+},
+{
+"id": 2,
+"titulo": "Sistema Solar",
+"disciplina": "Ciências",
+"tipo": "Quiz",
+"pontos": 30,
+"dataEntrega": "2023-11-08",
+"professorId": 1
+}
+],
+"ranking": [
+{
+"id": 1,
+"alunoId": 2,
+"posicao": 1,
+"pontos": 1200
+},
+{
+"id": 2,
+"alunoId": 1,
+"posicao": 3,
+"pontos": 750
+}
+],
+"metas": [
+{
+"id": 1,
+"alunoId": 1,
+"metaSemanal": 200,
+"progresso": 120,
+"badgeRecompensaId": 3
+}
+]
+}
